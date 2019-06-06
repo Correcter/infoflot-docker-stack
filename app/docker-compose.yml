@@ -1,0 +1,69 @@
+version: '3.2'
+services: 
+    dev-phalcon:
+        build: ./dev-phalcon
+        volumes:
+            - ./dev-phalcon/config/conf.d:/etc/nginx/conf.d
+            - ./dev-phalcon/www:/var/www/phalcon/
+            - ./dev-phalcon/logs:/var/log/nginx/
+        restart: always
+        links:
+           - php1
+           - php2
+           - php3
+    dev-yii2:
+        build: ./dev-yii2
+        volumes:
+            - ./dev-yii2/config/conf.d:/etc/nginx/conf.d
+            - ./dev-yii2/www:/var/www/yii2/
+            - ./dev-yii2/logs:/var/log/nginx/
+        restart: always
+        links:
+           - php1
+           - php2
+           - php3
+    php1:
+        build: ./php
+        restart: always
+        container_name: php1
+    php2:
+        build: ./php
+        restart: always
+        container_name: php2
+    php3:
+        build: ./php
+        restart: always
+        container_name: php3
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8989:8989
+        links:
+            - mariadb
+    robinproxy:
+        build: ./robinproxy
+        ports:
+            - 8080:80
+        restart: always
+    mariadb-haproxy:
+        image: nazarpc/webserver:haproxy-v1
+        restart: always
+        env_file:
+            - variables.env
+    mariadb:
+        image: nazarpc/webserver:mariadb-v1
+        volumes:
+          - ./mariadb:/var/lib/mysql
+        restart: always
+        env_file:
+            - variables.env
+    redis:
+        restart: always
+        image: redis:3.2-alpine
+        ports:
+            - 6379-6385:6379
+        volumes:
+            - ./redis:/data
+        env_file:
+            - variables.env

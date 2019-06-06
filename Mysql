@@ -1,0 +1,22 @@
+# copy the db-dump into the database container
+docker cp mydatabase.sql mariadb:/tmp/mydatabase.mysql
+
+# open a shell inside the database container
+
+docker exec -it mariadb bash
+export TERM=xterm
+cd /tmp
+# login to mariadb
+mysql -uroot -pmyROOTPASSOWRD
+
+# create the db in mariadb
+CREATE DATABASE example_com;
+# create a db user
+CREATE USER 'example_com'@'%' IDENTIFIED BY 'mydbpassword';
+GRANT ALL PRIVILEGES ON  example_com.* TO 'example_com'@'%';
+# leave the mysql client
+quit
+# import your db-dump
+mysql -uroot -pmyROOTPASSOWRD example_com < mydatabase.mysql
+# leave the container
+exit
