@@ -58,6 +58,6 @@ cd ~/infoflot-docker-stack/app
 
 docker-compose build
 
-docker-compose --scale docker-compose up --scale mariadb=2
+docker-compose --scale docker-compose up --scale mariadb=2 php=3
 
 docker-compose up

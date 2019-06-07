@@ -12,7 +12,7 @@
 - **3** экземпляров php7.0-fpm;
 - **1** узeл redis:3.2-alpine;
 - **1** узел HAProxy для балансировки нагрузки MariaDB;
-- **2** узла MariaDB Galera в кластере с Master-Master режиме репликации;
+- **2** узла MariaDB Galera в кластере;
 - **1** экземпляр PhpMyAdmin для работы с MariaDB Galera в графическом режиме;
 
 <span style="color:blue">*Примечание*</span>
@@ -55,7 +55,7 @@ GLOBAL OPTIONS:
 ### Сборка и запуск приложений вручную
 
 ##### docker-compose build
-##### docker-compose --scale docker-compose up --scale mariadb=2
+##### docker-compose --scale docker-compose up --scale mariadb=2 php=3
 ##### docker-compose up
 ```
 The result of command should be like that:
