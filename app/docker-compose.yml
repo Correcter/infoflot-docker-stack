@@ -8,9 +8,7 @@ services:
             - ./dev-phalcon/logs:/var/log/nginx/
         restart: always
         links:
-           - php1
-           - php2
-           - php3
+           - php
     dev-yii2:
         build: ./dev-yii2
         volumes:
@@ -19,21 +17,11 @@ services:
             - ./dev-yii2/logs:/var/log/nginx/
         restart: always
         links:
-           - php1
-           - php2
-           - php3
-    php1:
+           - php
+    php:
         build: ./php
         restart: always
-        container_name: php1
-    php2:
-        build: ./php
-        restart: always
-        container_name: php2
-    php3:
-        build: ./php
-        restart: always
-        container_name: php3
+        container_name: php
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
